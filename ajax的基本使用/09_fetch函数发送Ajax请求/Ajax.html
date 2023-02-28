@@ -1,0 +1,46 @@
+<!--
+ * @Author: JOJOcode
+ * @Date: 2022-11-15 18:21:21
+ * @LastEditTime: 2022-11-16 21:13:17
+ * @FilePath: \demo\09_fetch函数发送Ajax请求\Ajax.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch()发送Ajax请求,返回一个promise对象</title>
+    <!-- <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.3/axios.js"></script> -->
+</head>
+<body>
+
+    <button>通过fetch方法发送</button>
+    <div id="dio"></div>
+    <script>
+        const btn = document.getElementsByTagName("button")[0];
+
+        btn.onclick = function(){
+            // fecth 第一个参数是url 或 Request对象   第二个参数的可选的配置项对象
+            fetch("http://127.0.0.1:8000/fetch-server?dio=456",{
+                // 切记 GET请求不能加请求体
+                method:"POST",
+                // 请求头
+                headers:{
+                   name:"djoo"
+                },
+                // 请求体  可以是对象或字符串
+                body:'username=admin&password=admin121',
+            }).then(res =>{
+      // fetch()发送Ajax请求,返回一个promise对象  .then
+                // console.log(res);
+            //    return res.text();        //把返回结果解析成字符串
+               return res.json();   //把返回结果解析成json对象
+            }).then((res) =>{
+             console.log(res);      //{ name: "niuyeye" }
+            });
+        }
+
+    </script>
+</body>
+</html>

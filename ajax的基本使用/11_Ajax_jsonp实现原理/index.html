@@ -1,0 +1,44 @@
+<!--
+ * @Author: JOJOcode
+ * @Date: 2022-11-15 18:21:21
+ * @LastEditTime: 2022-11-17 16:09:23
+ * @FilePath: \demo\11_Ajax_jsonp实现原理\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsonp非官方解决方法(野路子)</title>
+    <!-- <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.3/axios.js"></script> -->
+    <style>
+        .result{
+            width: 300px;
+            height: 100px;
+            border:solid 1px #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="result"></div>
+
+    <!-- 处理数据的函数必须在在引入 test.js 之前 声明  -->
+<script>
+    // 处理数据   test.js里直接调用该函数
+     function handle(data) {
+    //  获取result元素
+    const result = document.getElementsByClassName("result")[0];
+    result.innerHTML = data.name;
+     }
+</script>
+
+
+    <!-- jsonp就是利用script标签的跨域功能来发送请求,只支持get请求 -->
+    <!-- 引入外部资源 html的一些标签本身就具有跨域的功能,比如: img link iframe script -->
+    <!-- <script src="./test.js"></script> -->
+    <!-- <script src="http://127.0.0.1:5500/11_Ajax_jsonp/test.js"></script> -->
+    <script src="http://127.0.0.1:8001/jsonp-server"></script>
+   
+</body>
+</html>

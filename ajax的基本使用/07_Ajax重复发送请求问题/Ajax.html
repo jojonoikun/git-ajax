@@ -1,0 +1,60 @@
+<!--
+ * @Author: JOJOcode
+ * @Date: 2022-11-15 18:21:21
+ * @LastEditTime: 2022-11-16 15:44:28
+ * @FilePath: \demo\07_Ajax重复发送请求问题\Ajax.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax重复(同一个)请求</title>
+    <style>
+        #dio{
+            width: 200px;
+            height: 100px;
+            border: solid 1px #ccc;
+        }
+    </style>
+</head>
+<body>
+    <button>点击发送请求</button>
+    <div id="dio"></div>
+    <script>
+        const btn = document.getElementsByTagName("button")[0];
+        const dio = document.getElementById("dio");
+        // 此处不能使用const 下面函数内把xhr的值变更了会报错
+        let xhr = null;
+
+        // 标识变量
+        let isSending = false; //是否正在发送Ajax请求
+
+        btn.addEventListener("click",function(){
+            // 判断标识变量   如果正在发送状态就取消该请求，创建一个新的请求
+            if(isSending)  x.abort();
+            xhr = new XMLHttpRequest();
+            // 修改 标识变量的值
+            isSending = true;
+            xhr.open('GET',"http://127.0.0.1:8000/delay");
+            xhr.send();
+        
+            // 处理返回的参数
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    // 不需要下面的判断  因为此次请求可能是失败的请求
+             // 在send()之后，即发送完请求后 修改回标识变量的值
+                    isSending = false;
+                    if(xhr.status >=200 && xhr.status < 300){
+                       dio.innerHTML = xhr.response;
+                    }
+                }
+
+            }
+        })
+
+
+    </script>
+</body>
+</html>

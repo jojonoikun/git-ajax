@@ -1,0 +1,44 @@
+<!--
+ * @Author: JOJOcode
+ * @Date: 2022-11-15 18:21:21
+ * @LastEditTime: 2022-11-15 22:01:10
+ * @FilePath: \Ajax\01_express\demo\04_IE_cache\Ajax.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IE缓存问题</title>
+    <style>
+        #dio{
+            width: 200px;
+            height: 100px;
+            border: solid 1px #ccc;
+        }
+    </style>
+</head>
+<body>
+    <button>点击发送请求</button>
+    <div id="dio"></div>
+    <script>
+        const btn = document.getElementsByTagName("button")[0];
+        const dio = document.getElementById("dio");
+        btn.addEventListener("click",function(){
+            const xhr = new XMLHttpRequest();
+            // Date.now()是获取当前时间的时间戳   //每次请求时间的不同就都是不同的请求,IE浏览器就不会走本地缓存
+            xhr.open('POST',"http://127.0.0.1:8000/ie?t="+Date.now());
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    if(xhr.status >=200 && xhr.status < 300){
+                       dio.innerHTML = xhr.response;
+                    }
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>

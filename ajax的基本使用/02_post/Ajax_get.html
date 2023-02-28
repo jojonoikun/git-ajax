@@ -1,0 +1,52 @@
+<!--
+ * @Author: JOJOcode
+ * @Date: 2022-11-15 18:21:21
+ * @LastEditTime: 2022-11-15 20:43:06
+ * @FilePath: \Ajax\01_express\demo\02_post\Ajax_get.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax post 请求</title>
+    <style>
+        #dio{
+            width: 200px;
+            height: 100px;
+            border: solid 1px #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="dio"></div>
+
+    <script>
+        const dio = document.getElementById("dio");
+        dio.addEventListener("mouseover",function(){
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST',"http://127.0.0.1:8000/server");
+
+            // 设置请求头  (头的名字,值)  Content-Type用来设置请求体的类型，比如设置成json
+            xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+
+            // 自定义特殊响应头   必须在服务器有设置对应的响应头(如果没设置由于浏览器都是使用预定义的响应头，识别不了会报错)
+            xhr.setRequestHeader("name","dio123")
+            //post传参
+            xhr.send("dio=jojo&c=123&a:100");
+
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    if(xhr.status >=200 && xhr.status < 300){
+                       dio.innerHTML = xhr.response;
+                    }else{
+                        
+                    }
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>
